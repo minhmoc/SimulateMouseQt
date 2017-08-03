@@ -13,10 +13,19 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+    MainWindow(QApplication *, QWidget *, QWidget *parent = 0);
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
+public:
+    void simulateMouse(QMouseEvent*);
+public slots:
+    void sendEvent();
+private:
+    QApplication *app;
+    QWidget *recvWidget;
+    QMouseEvent *event;
 };
 
 #endif // MAINWINDOW_H
