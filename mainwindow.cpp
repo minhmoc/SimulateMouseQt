@@ -7,6 +7,8 @@
 #include <QtTest/QTest>
 #include <QDesktopWidget>
 #include <simulate_mouse.h>
+#include <simulate_keyboard.h>
+
 #define QUIT_BUTTON_X 50
 #define QUIT_BUTTON_Y 60
 
@@ -44,7 +46,7 @@ void MainWindow::on_quit_clicked()
     qDebug() << "Clicked";
 }
 
-void MainWindow::on_start_clicked()
+void MainWindow::on_siml_mouse_clicked()
 {
     //    QCursor::setPos(mapToGlobal(QPoint(QUIT_BUTTON_X,QUIT_BUTTON_Y)).x(),
     //    mapToGlobal(QPoint(QUIT_BUTTON_X,QUIT_BUTTON_Y)).y());//use global position
@@ -97,4 +99,11 @@ void MainWindow::on_lineEdit_cursorPositionChanged(int arg1, int arg2)
 void MainWindow::on_lineEdit_selectionChanged()
 {
     qDebug() << "on selection changed";
+}
+
+void MainWindow::on_siml_keyboard_clicked()
+{
+    QLineEdit *lineEdit = findChild<QLineEdit*>(QString("lineEdit"));
+    if(lineEdit->text() != QString::null)
+    SendKeyStroke(lineEdit->text().at(0).toLatin1());
 }

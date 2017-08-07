@@ -29,13 +29,15 @@ public:
 private slots:
     void on_quit_clicked();
 
-    void on_start_clicked();
+    void on_siml_mouse_clicked();
 
     void on_quit_pressed();
 
     void on_lineEdit_cursorPositionChanged(int arg1, int arg2);
 
     void on_lineEdit_selectionChanged();
+
+    void on_siml_keyboard_clicked();
 
 private:
     QApplication *app;
