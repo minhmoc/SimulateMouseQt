@@ -24,8 +24,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    simulate_mouse.cpp \
+    simulate_keyboard.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    simulate_mouse.h \
+    simulate_keyboard.h
 
 FORMS    += mainwindow.ui

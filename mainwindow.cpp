@@ -4,11 +4,14 @@
 #include <QApplication>
 #include <QMouseEvent>
 #include <QDebug>
-#include <windows.h>
 #include <QtTest/QTest>
 #include <QDesktopWidget>
+#include <simulate_mouse.h>
 #define QUIT_BUTTON_X 50
 #define QUIT_BUTTON_Y 60
+
+
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -68,20 +71,7 @@ void MainWindow::on_start_clicked()
     */
 
     QDesktopWidget *desktop = QApplication::desktop();
-
-    const double XSCALEFACTOR = 65535/(double)(desktop->width() - 1);
-    const double YSCALEFACTOR = 65535/(double)(desktop->height() - 1);
-
-    double x = desktop->width()/2.0 * XSCALEFACTOR;
-    double y = desktop->height()/2.0 * YSCALEFACTOR;
-
-    INPUT input = {0};
-    input.type = INPUT_MOUSE;
-    input.mi.dx = x;
-    input.mi.dy = y;
-    input.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_RIGHTDOWN | MOUSEEVENTF_RIGHTUP;//must have MOUSEEVENTF_MOVE
-
-    SendInput(1,  &input, sizeof(INPUT));
+    SendRightClick(desktop->width()/2.0, desktop->height()/2.0);
 }
 
 QApplication *MainWindow::getApp() const
