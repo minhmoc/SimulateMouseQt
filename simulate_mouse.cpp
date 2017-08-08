@@ -11,7 +11,7 @@ void SendLeftClick(LONG dx, LONG dy)
     POINT cursor;
     GetCursorPos(&cursor);
 
-    INPUT input = {0};
+    INPUT input;
     input.type = INPUT_MOUSE;
     input.mi.dx = x;
     input.mi.dy = y;
@@ -39,7 +39,7 @@ void SendRightClick(LONG dx, LONG dy)
     POINT cursor;
     GetCursorPos(&cursor);
 
-    INPUT input = {0};
+    INPUT input;
     input.type = INPUT_MOUSE;
     input.mi.dx = x;
     input.mi.dy = y;

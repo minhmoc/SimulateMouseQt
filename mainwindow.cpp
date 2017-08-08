@@ -28,11 +28,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
+    Q_UNUSED(event)
     qDebug() << "Mouse press event: " << QCursor::pos();
 }
 
 void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 {
+    Q_UNUSED(event)
     qDebug() << "Mouse release event: " << QCursor::pos();
 }
 
@@ -93,6 +95,8 @@ void MainWindow::on_quit_pressed()
 
 void MainWindow::on_lineEdit_cursorPositionChanged(int arg1, int arg2)
 {
+    Q_UNUSED(arg1)
+    Q_UNUSED(arg2)
     qDebug() << "on cursor postion changed";
 }
 
@@ -104,6 +108,9 @@ void MainWindow::on_lineEdit_selectionChanged()
 void MainWindow::on_siml_keyboard_clicked()
 {
     QLineEdit *lineEdit = findChild<QLineEdit*>(QString("lineEdit"));
-    if(lineEdit->text() != QString::null)
-    SendKeyStroke(lineEdit->text().at(0).toLatin1());
+    if(lineEdit->text() != QString("")) {
+        QDesktopWidget *desktop = QApplication::desktop();
+        SendLeftClick(desktop->width()/2.0, desktop->height()/2.0);
+        SendKeyStrokes(lineEdit->text().toLatin1().data(), lineEdit->text().toLatin1().size());
+    }
 }
