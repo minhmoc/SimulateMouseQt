@@ -8,11 +8,10 @@
 #include <QDesktopWidget>
 #include <simulate_mouse.h>
 #include <simulate_keyboard.h>
+#include <iostream>
 
 #define QUIT_BUTTON_X 50
 #define QUIT_BUTTON_Y 60
-
-
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -108,9 +107,34 @@ void MainWindow::on_lineEdit_selectionChanged()
 void MainWindow::on_siml_keyboard_clicked()
 {
     QLineEdit *lineEdit = findChild<QLineEdit*>(QString("lineEdit"));
-    if(lineEdit->text() != QString("")) {
-        QDesktopWidget *desktop = QApplication::desktop();
-        SendLeftClick(desktop->width()/2.0, desktop->height()/2.0);
-        SendKeyStrokes(lineEdit->text().toLatin1().data(), lineEdit->text().toLatin1().size());
+
+    HWND hwnd = FindWindowA(0,"Untitled - Notepad");
+
+    if(hwnd) {
+        //        std::cout << "Found Notepad" << std::endl;
+        //        LPSTR class_name = new CHAR(100);
+        //        int length = GetClassNameA(hwnd, class_name, 100); Q_UNUSED(length);
+        //        std::cout << "Class name: " << class_name << std::endl;
+
+        //        RECT rect;
+        //        GetWindowRect(hwnd, &rect);
+        //        std::cout << rect.left <<  " - " << rect.top <<  " - " << rect.right << " - " << rect.bottom << std::endl;
+        //        HWND current_hwnd = GetForegroundWindow();
+        //        SetForegroundWindow(hwnd);//SetForegroundWindow gone after by a click quickly -> treat like a double click
+        //        if(lineEdit->text() != QString("")) {
+        //            SendLeftClick((rect.right - rect.left)/2.0, (rect.bottom - rect.top)/2.0);
+        //            SendKeyStrokes(lineEdit->text().toLatin1().data(), lineEdit->text().toLatin1().size());
+        //        }
+        //        SetForegroundWindow(current_hwnd);
+
+        RECT rect;
+        GetWindowRect(hwnd, &rect);
+        std::cout << rect.left <<  " - " << rect.top <<  " - " << rect.right << " - " << rect.bottom << std::endl;
+        int result = SendMESSAGE_LMOUSECLICK(hwnd, (rect.right - rect.left)/2.0, (rect.bottom - rect.top)/2.0);
+        if(result) {
+            std::cout << "Error: " << GetLastError() << std::endl;
+        }
+    } else {
+        std::cout << "Couldn't find Notepad: Error=" << GetLastError() << std::endl;
     }
 }
